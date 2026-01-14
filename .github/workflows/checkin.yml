@@ -27,16 +27,18 @@ jobs:
       PICA_PASSWORD: ${{ secrets.PICA_PASSWORD }}
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
       TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      TZ: "Asia/Shanghai"
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set timezone
-        run: sudo timedatectl set-timezone 'Asia/Shanghai'
-
       - name: Echo current time
-        run: timedatectl
+        run: |
+          echo "当前时区时间:"
+          date
+          echo "时区信息:"
+          ls -l /etc/localtime
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v5
