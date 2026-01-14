@@ -39,15 +39,7 @@ jobs:
           date
           echo "时区信息:"
           ls -l /etc/localtime
-      
-      # 配置 pip 全局镜像（可选）
-      - name: Configure pip mirror
-        run: |
-          python3.8 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-          python3.8 -m pip config set global.extra-index-url https://mirrors.aliyun.com/pypi/simple
-          python3.8 -m pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
-          python3.8 -m pip config set global.trusted-host mirrors.aliyun.com
-
+    
       - name: Use preinstalled Python
         run: |
           python3.8 --version
