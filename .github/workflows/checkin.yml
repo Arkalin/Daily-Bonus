@@ -40,11 +40,22 @@ jobs:
           echo "时区信息:"
           ls -l /etc/localtime
 
-      - name: Set up Python 3.8
+      # 使用国内镜像源加速 Python 安装
+      - name: Set up Python 3.8 (with mirror)
         uses: actions/setup-python@v5
         with:
           python-version: '3.8'
           architecture: 'x64'
+        env:
+          PIP_INDEX_URL: "https://pypi.tuna.tsinghua.edu.cn/simple"
+          PIP_EXTRA_INDEX_URL: "https://mirrors.aliyun.com/pypi/simple"
+      
+      # 配置 pip 全局镜像（可选）
+      - name: Configure pip mirror
+        run: |
+          pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+          pip config set global.extra-index-url https://mirrors.aliyun.com/pypi/simple
+          pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn mirrors.aliyun.com
 
       - name: Install dependencies
         run: |
