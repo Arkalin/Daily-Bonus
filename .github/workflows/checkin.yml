@@ -32,10 +32,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set timezone
-        run: |
-          sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-          echo "Asia/Shanghai" | sudo tee /etc/timezone
+      #- name: Set timezone
+      #  run: sudo timedatectl set-timezone 'Asia/Shanghai'
 
       - name: Echo current time
         run: timedatectl
