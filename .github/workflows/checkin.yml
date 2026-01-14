@@ -27,6 +27,7 @@ jobs:
       PICA_PASSWORD: ${{ secrets.PICA_PASSWORD }}
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
       TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      SERVERPUSHKEY: ${{ secrets.SERVERPUSHKEY }}
       TZ: "Asia/Shanghai"
 
     steps:
