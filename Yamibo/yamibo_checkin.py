@@ -39,7 +39,14 @@ HEADERS = {
 }
 
 # Bypass Cloudflare
-SESSION = cloudscraper.create_scraper()
+SESSION = cloudscraper.create_scraper(
+    browser={
+        'browser': 'chrome',
+        'platform': 'windows',
+        'mobile': False
+    }
+)
+
 
 
 # 登录
