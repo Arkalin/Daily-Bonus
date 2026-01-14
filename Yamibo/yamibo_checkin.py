@@ -45,16 +45,29 @@ SESSION = cloudscraper.create_scraper()
 # 登录
 def fhash():
     url = "https://bbs.yamibo.com/plugin.php?id=zqlj_sign"
-    r = SESSION.get(url)
-    tree = html.fromstring(r.text)
-
     try:
-        hash = tree.xpath('//*[@id="scbar_form"]/input[2]')[0].attrib['value']
-        return hash
+        r = SESSION.get(url, headers=HEADERS, timeout=10)
+        r.raise_for_status()
+        content = r.text
+            
+        # 方法1：从表单中提取formhash
+        soup = BeautifulSoup(content, 'html.parser')
+        formhash_input = soup.find('input', {'name': 'formhash'})
+        if formhash_input and formhash_input.get('value'):
+            return formhash_input['value']
+            
+        # 方法2：从搜索表单中提取
+        scbar_form = soup.find('form', id='scbar_form')
+        if scbar_form:
+            formhash_input = scbar_form.find('input', {'name': 'formhash'})
+            if formhash_input and formhash_input.get('value'):
+                return formhash_input['value']
+            
     except Exception as e:
-        global msg
-        msg += [{"name": "get form fhash error", "value": e}]
-        return ""
+        msg.append({"name": "获取formhash错误", "value": str(e)})
+    
+    msg.append({"name": "获取formhash失败", "value": "请检查Cookie是否有效"})
+    return ""
 
 
 # 签到
